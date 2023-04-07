@@ -99,6 +99,9 @@ public class MySensor {
 			
 			subscriber = new MqttClient(SERVER_URI, subscriberId);
 			subscriber.connect();
+
+			System.out.println("sending data to Server: " + SERVER_URI + " with topic: "+ PUBLISH_TOPIC);
+			System.out.println("Stop sending data e.g. with 'stop' message on MQTT-topic: "+ SUBSCRIPTION_TOPIC);
 			
 			//subscribe to specific topic
 			subscriber.subscribe(SUBSCRIPTION_TOPIC, subscriptionListener);
