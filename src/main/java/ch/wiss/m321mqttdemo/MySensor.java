@@ -8,7 +8,9 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
- * Simple Java MQTT-Demo to publish SIN wave data onto PUBLISH_TOPIC "sensors/java/",
+ * Simple Java MQTT-Demo to publish SIN wave data 
+ * per defasult on MQTT broker at localhost (otherwise, specify desired MQTT-Host as environment variable MQTT_BROKER)
+ * onto PUBLISH_TOPIC "sensors/java/",
  * subscribes at a specific SUBSCRIPTION_TOPIC "feedback/java/" and stops sending data if a stop message is received
  * 
  * appends environment variable SENSOR_ID (if set) after the topic, otherwise assumes 0
@@ -29,7 +31,7 @@ public class MySensor {
 	private static String PUBLISH_TOPIC = "sensors/java/";
 	private static String SUBSCRIPTION_TOPIC = "feedback/java/";
 
-	private static final String SERVER_URI = "tcp://127.0.0.1:1883";
+	private static String SERVER_URI = "tcp://127.0.0.1:1883";
 
 	private static double x = 0;
 
@@ -81,6 +83,15 @@ public class MySensor {
 
 		PUBLISH_TOPIC += id;
 		SUBSCRIPTION_TOPIC += id;
+
+		String host = System.getenv("MQTT_BROKER");
+		if (host != null && host.length()>1){
+			if (host.matches("tcp://[a-z0-9.]+:1883")){
+				SERVER_URI = host;
+			} else {
+				SERVER_URI = String.format("tcp://%s:1883", host);
+			}
+		}
 		
 		try {
 			
