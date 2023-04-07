@@ -8,11 +8,11 @@ PUBLISH_TOPIC is `sensors/java/0` - trailing 0 ist replaced with environment var
 
 Programm subscribes at a specific SUBSCRIPTION_TOPIC `feedback/java/{SENSOR_ID}` and stops sending data if `stop` message is received
 
-Run programm like that:
+Run programm like that (after `mvn clean package`):
  
 ```
  EXPORT SENSOR_ID=42
- java -cp target/MQTT-Client2-0.0.1-SNAPSHOT.jar ch.wiss.m321mqttdemo.MySensor 
+ java -cp target/MQTT-Client2-0.0.1-SNAPSHOT-jar-with-dependencies.jar ch.wiss.m321mqttdemo.MySensor 
  
 ```
 
